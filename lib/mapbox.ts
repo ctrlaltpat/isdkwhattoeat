@@ -3,7 +3,7 @@ export const mapStyle = {
   name: "IDKWhatToEat Style",
   glyphs: "mapbox://fonts/mapbox/{fontstack}/{range}.pbf",
   sources: {
-    mapbox: {
+    composite: {
       type: "vector" as const,
       url: "mapbox://mapbox.mapbox-streets-v8",
     },
@@ -13,101 +13,66 @@ export const mapStyle = {
       id: "background",
       type: "background" as const,
       paint: {
-        "background-color": "#070c18",
+        "background-color": "#1a237e",
       },
     },
     {
       id: "water",
       type: "fill" as const,
-      source: "mapbox",
+      source: "composite",
       "source-layer": "water",
       paint: {
-        "fill-color": "#003b73",
+        "fill-color": "#0d47a1",
       },
     },
     {
       id: "landuse",
       type: "fill" as const,
-      source: "mapbox",
+      source: "composite",
       "source-layer": "landuse",
       paint: {
-        "fill-color": "#0a1020",
-        "fill-opacity": 0.5,
+        "fill-color": "#283593",
+        "fill-opacity": 0.3,
       },
     },
     {
-      id: "roads-major",
+      id: "roads",
       type: "line" as const,
-      source: "mapbox",
+      source: "composite",
       "source-layer": "road",
-      filter: ["in", "class", "motorway", "trunk", "primary"],
       paint: {
-        "line-color": "#4a9eff",
-        "line-width": 3,
-      },
-    },
-    {
-      id: "roads-secondary",
-      type: "line" as const,
-      source: "mapbox", 
-      "source-layer": "road",
-      filter: ["in", "class", "secondary", "tertiary"],
-      paint: {
-        "line-color": "#3680d9",
-        "line-width": 2,
-      },
-    },
-    {
-      id: "roads-minor",
-      type: "line" as const,
-      source: "mapbox",
-      "source-layer": "road", 
-      filter: ["in", "class", "street", "street_limited"],
-      paint: {
-        "line-color": "#2560b3",
+        "line-color": "#64b5f6",
         "line-width": 1,
-      },
-    },
-    {
-      id: "buildings",
-      type: "fill" as const,
-      source: "mapbox",
-      "source-layer": "building",
-      paint: {
-        "fill-color": "#0f1829",
-        "fill-opacity": 0.7,
       },
     },
     {
       id: "place-labels",
       type: "symbol" as const,
-      source: "mapbox",
+      source: "composite",
       "source-layer": "place_label",
       layout: {
         "text-field": "{name}",
-        "text-font": ["Noto Sans Regular", "Arial Unicode MS Regular"],
         "text-size": 12,
       },
       paint: {
         "text-color": "#ffffff",
-        "text-halo-color": "#070c18",
-        "text-halo-width": 2,
+        "text-halo-color": "#1a237e",
+        "text-halo-width": 1,
       },
     },
     {
       id: "road-labels",
       type: "symbol" as const,
-      source: "mapbox",
+      source: "composite",
       "source-layer": "road_label",
       layout: {
         "text-field": "{name}",
-        "text-font": ["Noto Sans Regular", "Arial Unicode MS Regular"],
         "text-size": 10,
         "symbol-placement": "line" as const,
       },
       paint: {
-        "text-color": "#ffffff", 
-        "text-halo-color": "#070c18",
+        "text-color": "#ffffff",
+        "text-halo-color": "#1a237e",
         "text-halo-width": 1,
       },
     },
@@ -116,7 +81,7 @@ export const mapStyle = {
 
 export const MAPBOX_STYLE = mapStyle;
 
-export const DEFAULT_CENTER: [number, number] = [51.5162649, -0.130641];
+export const DEFAULT_CENTER: [number, number] = [-0.119841, 51.517236];
 export const DEFAULT_ZOOM = 15;
 
 const MAPBOX_API_BASE = "https://api.mapbox.com";
@@ -126,10 +91,12 @@ export async function searchPlaces(
   proximity: [number, number],
   accessToken: string
 ) {
-  const { usageTracker } = await import('./mapbox-limits')
-  
+  const { usageTracker } = await import("./mapbox-limits");
+
   if (!usageTracker.canMakeSearchRequest()) {
-    throw new Error('Search request limit exceeded. Please wait before trying again.')
+    throw new Error(
+      "Search request limit exceeded. Please wait before trying again."
+    );
   }
 
   const url = new URL(
@@ -141,14 +108,14 @@ export async function searchPlaces(
   url.searchParams.set("proximity", proximity.join(","));
   url.searchParams.set("types", "poi");
   url.searchParams.set("category", "restaurant,food");
-  url.searchParams.set("limit", "20"); 
+  url.searchParams.set("limit", "20");
 
   const response = await fetch(url.toString());
   if (!response.ok) {
     throw new Error("Failed to search places");
   }
 
-  usageTracker.recordSearchRequest()
+  usageTracker.recordSearchRequest();
   return response.json();
 }
 
@@ -158,10 +125,12 @@ export async function getDirections(
   profile: "driving" | "walking" | "cycling" = "walking",
   accessToken: string
 ) {
-  const { usageTracker } = await import('./mapbox-limits')
-  
+  const { usageTracker } = await import("./mapbox-limits");
+
   if (!usageTracker.canMakeDirectionsRequest()) {
-    throw new Error('Directions request limit exceeded. Please wait before trying again.')
+    throw new Error(
+      "Directions request limit exceeded. Please wait before trying again."
+    );
   }
 
   const url = new URL(
@@ -179,6 +148,6 @@ export async function getDirections(
     throw new Error("Failed to get directions");
   }
 
-  usageTracker.recordDirectionsRequest()
+  usageTracker.recordDirectionsRequest();
   return response.json();
 }
