@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { signIn } from "next-auth/react";
+import Image from "next/image";
 import { api } from "@/lib/api";
 import { notify } from "@/lib/toast";
 import Loading from "@/components/ui/Loading";
@@ -66,10 +67,14 @@ export default function SignInForm() {
       <div className="min-h-screen flex items-center justify-center px-4">
         <div className="bg-white rounded-lg shadow-xl p-8 w-full max-w-md">
           <form onSubmit={handleSubmit}>
-            <div className="text-center mb-8">
-              <h1 className="text-3xl font-bold text-blue-600 mb-2">
-                IDKWhatToEat
-              </h1>
+            <div className="text-center mb-8 flex flex-col items-center">
+              <Image
+                src="/idkwhattoeat_logo.png"
+                alt="IDKWhatToEat"
+                width={232}
+                height={48}
+                className="h-12 w-auto mb-4"
+              />
             </div>
 
             <div className="space-y-4">

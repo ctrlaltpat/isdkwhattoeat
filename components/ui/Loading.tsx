@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 interface LoadingProps {
   show: boolean;
 }
@@ -8,10 +10,29 @@ export default function Loading({ show }: LoadingProps) {
   if (!show) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg p-8 flex flex-col items-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mb-4"></div>
-        <p className="text-gray-700 font-medium">Loading...</p>
+    <div className="fixed inset-0 flex items-center justify-center z-50 bg-transparent">
+      <div className="bg-transparent flex flex-col items-center">
+        <div
+          className="mb-4 flex justify-center items-center"
+          style={{
+            perspective: "1000px",
+            width: "96px",
+            height: "154px",
+          }}
+        >
+          <Image
+            src="/loading-pin.png"
+            alt="Loading..."
+            width={96}
+            height={154}
+            className="animate-spin-y"
+            style={{
+              transformStyle: "preserve-3d",
+              animation: "spinY 2s linear infinite",
+            }}
+            priority
+          />
+        </div>
       </div>
     </div>
   );

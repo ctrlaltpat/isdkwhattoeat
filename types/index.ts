@@ -18,7 +18,7 @@ export interface UserSettings {
 export interface UserHistory {
   id: string;
   userId: string;
-  placeObj: string;
+  placeObj: string | object;
   createdAt: Date;
 }
 

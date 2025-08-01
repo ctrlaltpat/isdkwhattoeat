@@ -53,6 +53,17 @@ class APIClient {
       body: JSON.stringify({ placeObj: JSON.stringify(placeData) }),
     });
   }
+
+  async get<T>(url: string) {
+    return this.fw<T>(url);
+  }
+
+  async patch<T>(url: string, data: object) {
+    return this.fw<T>(url, {
+      method: "PATCH",
+      body: JSON.stringify(data),
+    });
+  }
 }
 
 export const api = new APIClient();
