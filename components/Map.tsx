@@ -105,6 +105,9 @@ export default function Map({ center, onMapLoad }: MapProps) {
             streetViewControl: false,
             mapTypeControl: false,
             fullscreenControl: false,
+            cameraControlOptions: {
+              position: google.maps.ControlPosition.RIGHT_CENTER
+            },
             zoomControlOptions: {
               position: google.maps.ControlPosition.LEFT_BOTTOM,
             },
