@@ -326,12 +326,12 @@ body {
   margin-top: 1.5rem;
 }
 
-.main-menu-button {
+.idkwhattoeat {
   position: fixed;
-  bottom: 2rem;
+  bottom: 11rem;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 50;
+  z-index: 30;
   background: var(--primary-blue);
   color: white;
   border: none;
@@ -344,7 +344,7 @@ body {
   transition: all var(--transition-fast);
 }
 
-.main-menu-button:hover {
+.idkwhattoeat:hover {
   background: var(--primary-blue-hover);
   transform: translateX(-50%) scale(1.05);
 }
@@ -352,7 +352,7 @@ body {
 .hamburger-button {
   position: fixed;
   bottom: 6rem;
-  right: 1.5rem;
+  right: 0.5rem;
   z-index: 50;
   width: 3.5rem;
   height: 3.5rem;
@@ -827,21 +827,14 @@ body {
     padding: 1.5rem;
   }
 
-  .travel-times-card {
-    position: relative;
-    top: auto;
-    left: auto;
-    margin-bottom: 1rem;
-  }
-
-  .main-menu-button {
+  .idkwhattoeat {
     font-size: 1rem;
     padding: 0.875rem 1.5rem;
   }
 
   .hamburger-button {
-    bottom: 4rem;
-    right: 1rem;
+    bottom: 5rem;
+    right: 0.2rem;
   }
 
   .dropdown-menu {

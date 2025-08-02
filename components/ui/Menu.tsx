@@ -86,7 +86,7 @@ export default function Menu({
 
       <button
         onClick={() => handleClick("random")}
-        className="main-menu-button"
+        className="idkwhattoeat"
       >
         I Don&apos;t Know What to Eat!
       </button>
