@@ -1,15 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/../auth";
 import { checkAndIncrementUsage } from "@/lib/usage-tracker";
+import { GooglePlacePhoto } from "@/types";
 
 interface DetailsRequest {
   placeId: string;
-}
-
-interface GooglePlacePhoto {
-  height: number;
-  width: number;
-  photo_reference: string;
 }
 
 interface GooglePlaceHours {

@@ -6,8 +6,12 @@ import SignInForm from "@/components/auth/SignInForm";
 import Menu from "@/components/ui/Menu";
 import Map from "@/components/Map";
 import Loading from "@/components/ui/Loading";
+import TravelTimes from "@/components/TravelTimes";
+import { GooglePlaceDetails } from "@/hooks/usePlacesSearch";
 import { useUserData } from "@/hooks/useUserData";
 import { useLocationHandling } from "@/hooks/useLocationHandling";
+import { useTravelTimes } from "@/hooks/useTravelTimes";
+import { User } from "@/types";
 
 export default function Home() {
   const { data: session, status } = useSession();
@@ -16,12 +20,23 @@ export default function Home() {
   const {
     loading: userDataLoading,
     userSettings,
+    userHistory,
     fetchUserData,
+    updateSettings,
+    addToHistory,
   } = useUserData();
 
   const { userLocation } = useLocationHandling(map, userSettings.location);
 
-  const loading = userDataLoading;
+  const {
+    travelTimes,
+    loading: travelTimesLoading,
+    calculateTravelTimes,
+    clearTravelTimes,
+  } = useTravelTimes();
+
+  const [getRandomLoading, setGetRandomLoading] = useState(false);
+  const loading = userDataLoading || travelTimesLoading || getRandomLoading;
 
   const handleMapLoad = useCallback(
     (loadedMap: google.maps.Map) => {
@@ -31,6 +46,12 @@ export default function Home() {
     },
     [userLocation]
   );
+
+  const handleGetDirections = (place: GooglePlaceDetails) => {
+    if (map) {
+      calculateTravelTimes(map, userLocation, place);
+    }
+  };
 
   useEffect(() => {
     if (session?.user) {
@@ -53,7 +74,21 @@ export default function Home() {
   return (
     <div className="app-container">
       <Map center={userLocation} onMapLoad={handleMapLoad} />
-      <Menu/>
+      <Menu
+        user={session.user as User}
+        userLocation={userLocation}
+        userSettings={userSettings}
+        userHistory={userHistory}
+        onUpdateSettings={updateSettings}
+        onAddToHistory={addToHistory}
+        onGetDirections={handleGetDirections}
+        setLoading={setGetRandomLoading}
+      />
+
+      {travelTimes && (
+        <TravelTimes times={travelTimes} onClose={clearTravelTimes} />
+      )}
+
       <Loading show={loading} />
     </div>
   );

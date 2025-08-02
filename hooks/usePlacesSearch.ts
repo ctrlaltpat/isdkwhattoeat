@@ -1,12 +1,8 @@
 import { useState, useCallback } from "react";
-
-export interface Location {
-  lat: number;
-  lng: number;
-}
+import { LatLng, GooglePlacePhoto } from "@/types";
 
 export interface SearchParams {
-  location: Location;
+  location: LatLng;
   keyword: string;
   radius: number;
 }
@@ -56,11 +52,7 @@ export interface GooglePlaceDetails {
     }>;
     weekday_text: string[];
   };
-  photos?: Array<{
-    height: number;
-    width: number;
-    photo_reference: string;
-  }>;
+  photos?: GooglePlacePhoto[];
   price_level?: number;
   url?: string;
   website?: string;

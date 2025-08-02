@@ -19,7 +19,7 @@ export async function checkAndIncrementUsage(
   userId: string,
   endpoint: ApiEndpoint
 ): Promise<UsageResult> {
-  const today = new Date().toISOString().split("T")[0]; // YYYY-MM-DD
+  const today = new Date().toISOString().split("T")[0];
 
   const usage = await prisma.apiUsage.upsert({
     where: {

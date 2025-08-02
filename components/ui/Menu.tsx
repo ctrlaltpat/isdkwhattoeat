@@ -3,8 +3,32 @@
 import { useState } from "react";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
+import GetRandom from "../GetRandom";
+import History, { HistoryItem } from "../History";
+import Settings from "../Settings";
+import { GooglePlaceDetails } from "@/hooks/usePlacesSearch";
+import { User, UserSettings, LatLng } from "@/types";
 
-export default function Menu() {
+interface MenuProps {
+  user: User;
+  userLocation: LatLng;
+  userSettings: UserSettings;
+  userHistory: HistoryItem[];
+  onUpdateSettings: (settings: UserSettings) => void;
+  onAddToHistory: (place: GooglePlaceDetails) => void;
+  onGetDirections: (place: GooglePlaceDetails) => void;
+  setLoading: (loading: boolean) => void;
+}
+
+export default function Menu({
+  userLocation,
+  userSettings,
+  userHistory,
+  onUpdateSettings,
+  onAddToHistory,
+  onGetDirections,
+  setLoading,
+}: MenuProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [activePanel, setActivePanel] = useState<string | null>(null);
 
@@ -19,6 +43,10 @@ export default function Menu() {
         setActivePanel(action);
       }
     }
+  };
+
+  const closePanel = () => {
+    setActivePanel(null);
   };
 
   const handleSignOut = () => {
@@ -72,26 +100,29 @@ export default function Menu() {
         <div className="hamburger-line" />
       </button>
 
-      {activePanel === "random" && (
-        <div className="random-panel">
-          <h2>Get Random Place</h2>
-          <button onClick={() => setActivePanel(null)}>Close</button>
-        </div>
-      )}
+      <GetRandom
+        userLocation={userLocation}
+        userSettings={userSettings}
+        isOpen={activePanel === "random"}
+        onClose={closePanel}
+        onGetDirections={onGetDirections}
+        onAddToHistory={onAddToHistory}
+        setLoading={setLoading}
+      />
 
-      {activePanel === "history" && (
-        <div className="history-panel">
-          <h2>History</h2>
-          <button onClick={() => setActivePanel(null)}>Close</button>
-        </div>
-      )}
+      <History
+        history={userHistory}
+        isOpen={activePanel === "history"}
+        onClose={closePanel}
+        onGetDirections={onGetDirections}
+      />
 
-      {activePanel === "settings" && (
-        <div className="settings-panel">
-          <h2>Settings</h2>
-          <button onClick={() => setActivePanel(null)}>Close</button>
-        </div>
-      )}
+      <Settings
+        settings={userSettings}
+        onUpdateSettings={onUpdateSettings}
+        isOpen={activePanel === "settings"}
+        onClose={closePanel}
+      />
     </>
   );
 }

@@ -49,7 +49,6 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { placeObj } = addHistorySchema.parse(body);
 
-    // Validate that placeObj is valid JSON
     try {
       JSON.parse(placeObj);
     } catch {

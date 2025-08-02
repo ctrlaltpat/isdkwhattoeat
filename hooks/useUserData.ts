@@ -1,17 +1,7 @@
 import { useState, useCallback } from "react";
+import { UserSettings } from "@/types";
+import { HistoryItem } from "@/components/History";
 import { GooglePlaceDetails } from "@/hooks/usePlacesSearch";
-
-interface UserSettings {
-  cuisine: string;
-  radius: number;
-  location?: string;
-}
-
-interface HistoryItem {
-  id: string;
-  placeObj: string | GooglePlaceDetails;
-  createdAt: string;
-}
 
 export function useUserData() {
   const [loading, setLoading] = useState(false);

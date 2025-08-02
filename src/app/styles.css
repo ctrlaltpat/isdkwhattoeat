@@ -101,18 +101,6 @@ body {
   margin-bottom: 2rem;
 }
 
-.auth-title {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--gray-900);
-  margin-bottom: 1rem;
-}
-
-.auth-subtitle {
-  color: var(--gray-600);
-  margin-bottom: 2rem;
-}
-
 .auth-form-fields {
   display: flex;
   flex-direction: column;
@@ -138,7 +126,6 @@ body {
   text-decoration: underline;
 }
 
-/* Form Elements */
 .form-field {
   display: flex;
   flex-direction: column;
@@ -232,11 +219,6 @@ body {
 .btn-small {
   padding: 0.5rem 1rem;
   font-size: 0.875rem;
-}
-
-.btn-large {
-  padding: 1rem 2rem;
-  font-size: 1.125rem;
 }
 
 .btn-full-width {
@@ -467,6 +449,177 @@ body {
   background: #fef2f2;
 }
 
+.place-card {
+  background: white;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 1rem;
+}
+
+.place-name {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.place-name a {
+  color: var(--primary-blue);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.place-name a:hover {
+  color: var(--primary-blue-hover);
+}
+
+.place-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.star-rating {
+  display: flex;
+  align-items: center;
+}
+
+.star {
+  font-size: 1.125rem;
+}
+
+.star.filled {
+  color: var(--yellow-400);
+}
+
+.star.empty {
+  color: var(--gray-300);
+}
+
+.rating-text {
+  font-size: 0.875rem;
+  color: var(--gray-600);
+}
+
+.place-price {
+  color: var(--green-600);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.place-address {
+  color: var(--gray-700);
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+}
+
+.place-phone {
+  color: var(--primary-blue);
+  text-decoration: none;
+  font-size: 0.875rem;
+  display: block;
+  margin-bottom: 0.5rem;
+  transition: color var(--transition-fast);
+}
+
+.place-phone:hover {
+  color: var(--primary-blue-hover);
+  text-decoration: underline;
+}
+
+.place-hours {
+  color: var(--secondary-orange);
+  font-size: 0.875rem;
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.place-images {
+  margin-bottom: 1rem;
+}
+
+.place-image {
+  width: 100%;
+  height: 16rem;
+  object-fit: cover;
+  border-radius: 0.5rem;
+}
+
+.place-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.travel-times-card {
+  background: white;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--gray-200);
+  position: fixed;
+  top: 1.5rem;
+  left: 1.5rem;
+  z-index: 40;
+  max-width: 20rem;
+}
+
+.travel-times-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.travel-times-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--gray-800);
+}
+
+.travel-times-close {
+  width: 1.5rem;
+  height: 1.5rem;
+  background: var(--gray-200);
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gray-600);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+  font-size: 0.875rem;
+}
+
+.travel-times-close:hover {
+  background: var(--gray-300);
+}
+
+.travel-times-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.travel-time-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.travel-mode {
+  font-size: 0.875rem;
+  color: var(--gray-700);
+}
+
+.travel-duration {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--primary-blue);
+}
+
 .loading-overlay {
   position: fixed;
   inset: 0;
@@ -507,6 +660,108 @@ body {
   font-weight: 500;
 }
 
+.error-message {
+  background: var(--red-100);
+  border: 1px solid var(--red-400);
+  color: var(--red-700);
+  padding: 1rem;
+  border-radius: 0.25rem;
+  margin-bottom: 1rem;
+}
+
+.place-images-container {
+  width: 100%;
+  max-width: 400px;
+}
+
+.place-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.place-image-placeholder {
+  width: 100%;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--gray-100);
+  border-radius: 8px;
+}
+
+.no-image-text {
+  color: var(--gray-600);
+  font-size: 14px;
+}
+
+.location-input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.location-clear-btn {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1.5rem;
+  height: 1.5rem;
+  background: var(--gray-200);
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gray-600);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.location-clear-btn:hover {
+  background: var(--gray-300);
+}
+
+.location-help {
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+  color: var(--gray-600);
+  font-style: italic;
+}
+
+.location-valid {
+  border-color: var(--green-600) !important;
+  box-shadow: 0 0 0 1px var(--green-600);
+}
+
+.location-invalid {
+  border-color: var(--red-400) !important;
+  box-shadow: 0 0 0 1px var(--red-400);
+}
+
+.location-validating {
+  position: absolute;
+  right: 2.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.location-spinner {
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid var(--gray-200);
+  border-top: 2px solid var(--primary-blue);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
 @keyframes spin {
   0% {
     transform: rotate(0deg);
@@ -514,6 +769,28 @@ body {
   100% {
     transform: rotate(360deg);
   }
+}
+
+.location-validation {
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.location-validation-success {
+  background: rgba(22, 163, 74, 0.1);
+  border: 1px solid var(--green-600);
+  color: var(--green-600);
+}
+
+.location-validation-error {
+  background: rgba(248, 113, 113, 0.1);
+  border: 1px solid var(--red-400);
+  color: var(--red-700);
 }
 
 .visually-hidden {
@@ -536,7 +813,6 @@ body {
   width: 100%;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
   .modal-container {
     width: calc(100% - 3rem);
@@ -549,6 +825,13 @@ body {
   .auth-form {
     margin: 1rem;
     padding: 1.5rem;
+  }
+
+  .travel-times-card {
+    position: relative;
+    top: auto;
+    left: auto;
+    margin-bottom: 1rem;
   }
 
   .main-menu-button {
