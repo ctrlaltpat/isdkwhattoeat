@@ -13,7 +13,7 @@ interface PlaceImagesProps {
 
 export default class PlaceImages extends Component<PlaceImagesProps> {
   private getPhotoUrl(photo: GooglePlacePhoto, maxWidth: number = 400): string {
-    return `https://maps.googleapis.com/maps/api/place/photo?maxwidth=${maxWidth}&photo_reference=${photo.photo_reference}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`;
+    return `/api/maps/photo?photo_reference=${photo.photo_reference}&maxwidth=${maxWidth}`;
   }
 
   render() {
