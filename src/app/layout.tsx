@@ -1,16 +1,12 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Roboto } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 import SessionProvider from "@/components/providers/SessionProvider";
-import "./globals.css";
+import "./styles.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const robo = Roboto({
+  weight: "300",
+  variable: "--btn-font",
   subsets: ["latin"],
 });
 
@@ -26,21 +22,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 min-h-screen text-white`}
-      >
+      <body className={`${robo.variable} app-background`}>
         <SessionProvider>
-          <div className="min-h-screen flex flex-col">
-            {children}
-          </div>
+          <div className="app-container">{children}</div>
           <Toaster
             position="top-right"
             toastOptions={{
               duration: 4000,
               style: {
-                background: '#1e40af',
-                color: '#ffffff',
-                border: '1px solid #3b82f6',
+                background: "#1e40af",
+                color: "#ffffff",
+                border: "1px solid #3b82f6",
               },
             }}
           />

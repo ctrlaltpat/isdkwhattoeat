@@ -1,41 +1,60 @@
 "use client";
 
+import { useState, useEffect, useCallback } from "react";
 import { useSession } from "next-auth/react";
 import SignInForm from "@/components/auth/SignInForm";
 import Menu from "@/components/ui/Menu";
-import MapboxMap from "@/components/map/MapboxMap";
+import Map from "@/components/Map";
+import Loading from "@/components/ui/Loading";
+import { useUserData } from "@/hooks/useUserData";
+import { useLocationHandling } from "@/hooks/useLocationHandling";
 
 export default function Home() {
   const { data: session, status } = useSession();
+  const [map, setMap] = useState<google.maps.Map | null>(null);
+
+  const {
+    loading: userDataLoading,
+    userSettings,
+    fetchUserData,
+  } = useUserData();
+
+  const { userLocation } = useLocationHandling(map, userSettings.location);
+
+  const loading = userDataLoading;
+
+  const handleMapLoad = useCallback(
+    (loadedMap: google.maps.Map) => {
+      console.log("Map loaded:", loadedMap);
+      setMap(loadedMap);
+      loadedMap.setCenter(userLocation);
+    },
+    [userLocation]
+  );
+
+  useEffect(() => {
+    if (session?.user) {
+      fetchUserData();
+    }
+  }, [session, fetchUserData]);
 
   if (status === "loading") {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
+      <div className="loading-screen">
+        <div className="loading-spinner"></div>
       </div>
     );
   }
 
   if (!session) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900 flex items-center justify-center p-4">
-        <SignInForm />
-      </div>
-    );
+    return <SignInForm />;
   }
 
-  const handleMapReady = () => {
-    console.log("Map is ready");
-  };
-
-  const handleMenuClick = (action: string) => {
-    console.log("Menu action:", action);
-  };
-
   return (
-    <div className="h-screen w-screen relative overflow-hidden">
-      <Menu onMenuClick={handleMenuClick} />
-      <MapboxMap onMapReady={handleMapReady} className="w-full h-full" />
+    <div className="app-container">
+      <Map center={userLocation} onMapLoad={handleMapLoad} />
+      <Menu/>
+      <Loading show={loading} />
     </div>
   );
 }

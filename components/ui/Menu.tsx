@@ -2,20 +2,22 @@
 
 import { useState } from "react";
 import { signOut } from "next-auth/react";
+import Image from "next/image";
 
-interface MenuProps {
-  onMenuClick: (action: string) => void;
-}
-
-export default function Menu({ onMenuClick }: MenuProps) {
+export default function Menu() {
   const [isOpen, setIsOpen] = useState(false);
+  const [activePanel, setActivePanel] = useState<string | null>(null);
 
   const handleClick = (action: string) => {
     if (action === "main") {
       setIsOpen(!isOpen);
     } else {
       setIsOpen(false);
-      onMenuClick(action);
+      if (activePanel === action) {
+        setActivePanel(null);
+      } else {
+        setActivePanel(action);
+      }
     }
   };
 
@@ -25,72 +27,71 @@ export default function Menu({ onMenuClick }: MenuProps) {
 
   return (
     <>
-      <div
-        className={`fixed bottom-6 right-6 z-50 transition-all duration-300 ${
-          isOpen ? "w-64" : "w-16"
-        }`}
-      >
-        {isOpen && (
-          <div className="bg-white rounded-lg shadow-xl mb-4 overflow-hidden">
-            <button
-              onClick={() => handleClick("random")}
-              className="w-full px-6 py-4 text-left text-gray-800 hover:bg-blue-50 transition-colors border-b border-gray-100"
-            >
-              I Don&apos;t know what to eat!
-            </button>
-            <button
-              onClick={() => handleClick("history")}
-              className="w-full px-6 py-4 text-left text-gray-800 hover:bg-blue-50 transition-colors border-b border-gray-100"
-            >
-              View History
-            </button>
-            <button
-              onClick={() => handleClick("settings")}
-              className="w-full px-6 py-4 text-left text-gray-800 hover:bg-blue-50 transition-colors border-b border-gray-100"
-            >
-              Settings
-            </button>
-            <button
-              onClick={handleSignOut}
-              className="w-full px-6 py-4 text-left text-gray-800 hover:bg-red-50 transition-colors"
-            >
-              Sign Out
-            </button>
+      {isOpen && (
+        <div className={`dropdown-menu ${isOpen ? "open" : ""}`}>
+          <div className="dropdown-header">
+            <Image
+              src="/idkwhattoeat_logo.png"
+              alt="IDKWhatToEat"
+              width={116}
+              height={24}
+              className="dropdown-logo"
+            />
           </div>
-        )}
-
-        {isOpen && (
           <button
-            onClick={() => setIsOpen(false)}
-            className="absolute -top-2 -right-2 w-8 h-8 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center transition-colors shadow-lg"
+            onClick={() => handleClick("history")}
+            className="dropdown-item"
           >
-            ×
+            View History
           </button>
-        )}
+          <button
+            onClick={() => handleClick("settings")}
+            className="dropdown-item"
+          >
+            Settings
+          </button>
+          <button onClick={handleSignOut} className="dropdown-item danger">
+            Sign Out
+          </button>
+        </div>
+      )}
 
-        <button
-          onClick={() => handleClick("main")}
-          className="w-16 h-16 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-xl flex items-center justify-center transition-all duration-200 hover:scale-105"
-        >
-          <div className="flex flex-col space-y-1">
-            <div
-              className={`w-6 h-0.5 bg-white transition-all duration-300 ${
-                isOpen ? "rotate-45 translate-y-1.5" : ""
-              }`}
-            />
-            <div
-              className={`w-6 h-0.5 bg-white transition-all duration-300 ${
-                isOpen ? "opacity-0" : ""
-              }`}
-            />
-            <div
-              className={`w-6 h-0.5 bg-white transition-all duration-300 ${
-                isOpen ? "-rotate-45 -translate-y-1.5" : ""
-              }`}
-            />
-          </div>
-        </button>
-      </div>
+      <button
+        onClick={() => handleClick("random")}
+        className="main-menu-button"
+      >
+        I Don&apos;t Know What to Eat!
+      </button>
+
+      <button
+        onClick={() => handleClick("main")}
+        className={`hamburger-button ${isOpen ? "open" : ""}`}
+      >
+        <div className="hamburger-line" />
+        <div className="hamburger-line" />
+        <div className="hamburger-line" />
+      </button>
+
+      {activePanel === "random" && (
+        <div className="random-panel">
+          <h2>Get Random Place</h2>
+          <button onClick={() => setActivePanel(null)}>Close</button>
+        </div>
+      )}
+
+      {activePanel === "history" && (
+        <div className="history-panel">
+          <h2>History</h2>
+          <button onClick={() => setActivePanel(null)}>Close</button>
+        </div>
+      )}
+
+      {activePanel === "settings" && (
+        <div className="settings-panel">
+          <h2>Settings</h2>
+          <button onClick={() => setActivePanel(null)}>Close</button>
+        </div>
+      )}
     </>
   );
 }

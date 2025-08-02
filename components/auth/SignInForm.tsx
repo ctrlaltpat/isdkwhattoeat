@@ -64,20 +64,20 @@ export default function SignInForm() {
 
   return (
     <>
-      <div className="min-h-screen flex items-center justify-center px-4">
-        <div className="bg-white rounded-lg shadow-xl p-8 w-full max-w-md">
+      <div className="auth-container">
+        <div className="auth-form">
           <form onSubmit={handleSubmit}>
-            <div className="text-center mb-8 flex flex-col items-center">
+            <div className="text-center">
               <Image
                 src="/idkwhattoeat_logo.png"
                 alt="IDKWhatToEat"
                 width={232}
                 height={48}
-                className="h-12 w-auto mb-4"
+                className="auth-logo"
               />
             </div>
 
-            <div className="space-y-4">
+            <div className="auth-form-fields">
               <input
                 type="text"
                 name="username"
@@ -85,7 +85,7 @@ export default function SignInForm() {
                 value={formData.username}
                 onChange={handleInputChange}
                 required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
+                className="form-input"
               />
 
               {isSignUp && (
@@ -97,7 +97,7 @@ export default function SignInForm() {
                     value={formData.firstName}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
+                    className="form-input"
                   />
                   <input
                     type="text"
@@ -105,7 +105,7 @@ export default function SignInForm() {
                     placeholder="Last Name"
                     value={formData.lastName}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
+                    className="form-input"
                   />
                   <input
                     type="email"
@@ -114,7 +114,7 @@ export default function SignInForm() {
                     value={formData.email}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
+                    className="form-input"
                   />
                 </>
               )}
@@ -126,28 +126,28 @@ export default function SignInForm() {
                 value={formData.password}
                 onChange={handleInputChange}
                 required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
+                className="form-input"
               />
 
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition duration-200 disabled:opacity-50"
+                className="btn btn-primary btn-full-width"
               >
                 {isSignUp ? "SIGN UP" : "SIGN IN"}
               </button>
             </div>
 
-            <p className="text-center mt-6 text-gray-600">
+            <div className="auth-links">
               {isSignUp ? "Already registered?" : "Not registered?"}{" "}
               <button
                 type="button"
                 onClick={() => setIsSignUp(!isSignUp)}
-                className="text-blue-600 hover:underline font-medium"
+                className="auth-link"
               >
                 {isSignUp ? "Sign in." : "Sign up."}
               </button>
-            </p>
+            </div>
           </form>
         </div>
       </div>

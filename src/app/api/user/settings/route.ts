@@ -8,6 +8,7 @@ const prisma = new PrismaClient();
 const settingsSchema = z.object({
   cuisine: z.string().optional(),
   radius: z.number().min(200).max(5000).optional(),
+  location: z.string().optional(),
 });
 
 export async function GET() {
@@ -57,6 +58,7 @@ export async function PATCH(request: NextRequest) {
         userId: session.user.id,
         cuisine: validatedData.cuisine || "",
         radius: validatedData.radius || 500,
+        location: validatedData.location,
       },
     });
 
